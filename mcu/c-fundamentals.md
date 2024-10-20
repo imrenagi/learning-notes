@@ -62,6 +62,7 @@ void update_user_data(uint8_t *const age) {
   }
 }
 ```
+
 #### Use case 4: Const data and const pointer
 ```c
 uint8_t const *const ptr = (uint8_t)0x70000000;
