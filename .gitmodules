@@ -1,0 +1,3 @@
+[submodule "mcu-driver-1/MasteringMCU"]
+	path = mcu-driver-1/MasteringMCU
+	url = git@github.com:niekiran/MasteringMCU.git

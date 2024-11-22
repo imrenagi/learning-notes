@@ -1,0 +1,290 @@
+
+There are no discarded input sections
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+SRAM             0x24000000         0x00071c00         xrw
+RAM_NONCACHEABLEBUFFER 0x24071c00         0x00000400         xrw
+ITCM             0x00000000         0x00010000         xrw
+DTCM             0x20000000         0x00010000         rw
+SRAMAHB          0x30000000         0x00008000         rw
+BKPSRAM          0x38800000         0x00001000         rw
+FLASH            0x08000000         0x00010000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD main.o
+LOAD led.o
+LOAD STM32H7S3L8_startup.o
+                0x20010000                        _estack = (ORIGIN (DTCM) + LENGTH (DTCM))
+                0x00000200                        _Min_Heap_Size = 0x200
+                0x00000400                        _Min_Stack_Size = 0x400
+                0x08000000                        __FLASH_BEGIN = 0x8000000
+                0x00010000                        __FLASH_SIZE = 0x10000
+                0x24000000                        __RAM_BEGIN = 0x24000000
+                0x00071c00                        __RAM_SIZE = 0x71c00
+                0x00000400                        __RAM_NONCACHEABLEBUFFER_SIZE = 0x400
+
+.text           0x08000000      0x9b0
+ *(.isr_vector)
+ .isr_vector    0x08000000      0x2b0 STM32H7S3L8_startup.o
+                0x08000000                vectors
+ *(.text)
+ .text          0x080002b0      0x504 main.o
+                0x080002b0                main
+                0x080002e0                idle_handler
+                0x080002e8                task1_handler
+                0x0800031c                task2_handler
+                0x08000350                task3_handler
+                0x08000380                task4_handler
+                0x0800039c                schedule
+                0x080003c0                task_delay
+                0x08000420                init_systick_timer
+                0x08000490                init_scheduler_stack
+                0x0800049a                init_tasks_stack
+                0x080005b0                enable_processor_faults
+                0x080005e8                HardFault_Handler
+                0x080005f4                MemManage_Handler
+                0x08000600                BusFault_Handler
+                0x0800060c                UsageFault_Handler
+                0x08000618                get_psp_value
+                0x08000638                save_psp_value
+                0x08000660                update_next_task
+                0x080006e4                switch_sp_to_psp
+                0x080006fe                PendSV_Handler
+                0x08000724                update_global_tick_count
+                0x08000740                unblock_tasks
+                0x080007a0                SysTick_Handler
+ .text          0x080007b4      0x160 led.o
+                0x080007b4                led_init_all
+                0x0800084c                led_on
+                0x080008b0                led_off
+ .text          0x08000914       0x90 STM32H7S3L8_startup.o
+                0x08000914                TIM12_Handler
+                0x08000914                FLASH_Handler
+                0x08000914                RNG_Handler
+                0x08000914                DebugMon_Handler
+                0x08000914                CACHE_ECC_Handler
+                0x08000914                OTG_HS_Handler
+                0x08000914                EXTI8_Handler
+                0x08000914                EXTI15_Handler
+                0x08000914                USART3_Handler
+                0x08000914                WAKEUP_PIN_Handler
+                0x08000914                GPDMA1_CH2_Handler
+                0x08000914                GPDMA1_CH10_Handler
+                0x08000914                NMI_Handler
+                0x08000914                CRS_Handler
+                0x08000914                IWDG_Handler
+                0x08000914                I2C1_EV_Handler
+                0x08000914                ADC1_2_Handler
+                0x08000914                I2C3_ER_Handler
+                0x08000914                WWDG_Handler
+                0x08000914                EXTI4_Handler
+                0x08000914                I2C3_EV_Handler
+                0x08000914                SAI2_A_Handler
+                0x08000914                GPDMA1_CH13_Handler
+                0x08000914                LPTIM5_Handler
+                0x08000914                HPDMA1_CH3_Handler
+                0x08000914                EXTI13_Handler
+                0x08000914                OTG_FS_Handler
+                0x08000914                I2C1_ER_Handler
+                0x08000914                FDCAN1_IT0_Handler
+                0x08000914                HPDMA1_CH14_Handler
+                0x08000914                RTC_Handler
+                0x08000914                ECC_FPU_Handler
+                0x08000914                HASH_Handler
+                0x08000914                SAES_Handler
+                0x08000914                HPDMA1_CH2_Handler
+                0x08000914                HPDMA1_CH11_Handler
+                0x08000914                TIM1_CC_Handler
+                0x08000914                I2C2_ER_Handler
+                0x08000914                HPDMA1_CH0_Handler
+                0x08000914                GPDMA1_CH8_Handler
+                0x08000914                I3C1_EV_Handler
+                0x08000914                MCE3_Handler
+                0x08000914                PKA_Handler
+                0x08000914                HPDMA1_CH4_Handler
+                0x08000914                GFXMMU_Handler
+                0x08000914                TIM1_BRK_Handler
+                0x08000914                MCE2_Handler
+                0x08000914                EXTI5_Handler
+                0x08000914                SAI2_B_Handler
+                0x08000914                FDCAN2_IT1_Handler
+                0x08000914                GPDMA1_CH9_Handler
+                0x08000914                GPDMA1_CH7_Handler
+                0x08000914                LPTIM3_Handler
+                0x08000914                EXTI1_Handler
+                0x08000914                EXTI10_Handler
+                0x08000914                OSPI1_Handler
+                0x08000914                FMC_Handler
+                0x08000914                EXTI3_Handler
+                0x08000914                GPDMA1_CH6_Handler
+                0x08000914                EXTI12_Handler
+                0x08000914                EXTI2_Handler
+                0x08000914                UART4_Handler
+                0x08000914                TCACHE_Handler
+                0x08000914                GPDMA1_CH4_Handler
+                0x08000914                TIM2_Handler
+                0x08000914                USART1_Handler
+                0x08000914                HPDMA1_CH6_Handler
+                0x08000914                HPDMA1_CH15_Handler
+                0x08000914                JPEG_Handler
+                0x08000914                TIM3_Handler
+                0x08000914                HPDMA1_CH5_Handler
+                0x08000914                Default_Handler
+                0x08000914                LPUART1_Handler
+                0x08000914                EXTI9_Handler
+                0x08000914                SPI6_Handler
+                0x08000914                HPDMA1_CH8_Handler
+                0x08000914                CORDIC_Handler
+                0x08000914                TIM17_Handler
+                0x08000914                TIM13_Handler
+                0x08000914                GPDMA1_CH1_Handler
+                0x08000914                SPDIF_RX_Handler
+                0x08000914                EXTI14_Handler
+                0x08000914                LTDC_Handler
+                0x08000914                GPU2D_ER_Handler
+                0x08000914                TIM4_Handler
+                0x08000914                PVD_AVD_Handler
+                0x08000914                SAI1_B_Handler
+                0x08000914                DTS_Handler
+                0x08000914                SPI2_Handler
+                0x08000914                SDMMC1_Handler
+                0x08000914                UART7_Handler
+                0x08000914                TIM16_Handler
+                0x08000914                HPDMA1_CH13_Handler
+                0x08000914                GPDMA1_CH11_Handler
+                0x08000914                EXTI0_Handler
+                0x08000914                SVC_Handler
+                0x08000914                GPDMA1_CH14_Handler
+                0x08000914                HPDMA1_CH9_Handler
+                0x08000914                DMA2D_Handler
+                0x08000914                GPDMA1_CH3_Handler
+                0x08000914                TIM1_UP_Handler
+                0x08000914                EXTI11_Handler
+                0x08000914                LPTIM2_Handler
+                0x08000914                HPDMA1_CH7_Handler
+                0x08000914                TAMP_Handler
+                0x08000914                TIM14_Handler
+                0x08000914                EXTI7_Handler
+                0x08000914                LPTIM1_Handler
+                0x08000914                TIM9_Handler
+                0x08000914                USART2_Handler
+                0x08000914                ETH_Handler
+                0x08000914                SPI1_Handler
+                0x08000914                MDIOS_Handler
+                0x08000914                FDCAN2_IT0_Handler
+                0x08000914                GPDMA1_CH12_Handler
+                0x08000914                GPU2D_Handler
+                0x08000914                I2C2_EV_Handler
+                0x08000914                HPDMA1_CH10_Handler
+                0x08000914                SPI3_Handler
+                0x08000914                UART8_Handler
+                0x08000914                ADF1_FLT0_Handler
+                0x08000914                RCC_Handler
+                0x08000914                FDCAN1_IT1_Handler
+                0x08000914                GFXTIM_Handler
+                0x08000914                SDMMC2_Handler
+                0x08000914                UART5_Handler
+                0x08000914                TIM15_Handler
+                0x08000914                LTDC_ER_Handler
+                0x08000914                TIM5_Handler
+                0x08000914                OSPI2_Handler
+                0x08000914                LPTIM4_Handler
+                0x08000914                GPDMA1_CH15_Handler
+                0x08000914                TIM7_Handler
+                0x08000914                CEC_Handler
+                0x08000914                UCPD1_Handler
+                0x08000914                HPDMA1_CH12_Handler
+                0x08000914                LOOKUP_Handler
+                0x08000914                PSSI_Handler
+                0x08000914                FPU_Handler
+                0x08000914                GPDMA1_CH0_Handler
+                0x08000914                I3C1_WKUP_Handler
+                0x08000914                SPI5_Handler
+                0x08000914                TIM6_Handler
+                0x08000914                SAI1_A_Handler
+                0x08000914                MCE1_Handler
+                0x08000914                EXTI6_Handler
+                0x08000914                I3C1_ER_Handler
+                0x08000914                TIM1_TRG_COM_Handler
+                0x08000914                AES_Handler
+                0x08000914                SPI4_Handler
+                0x08000914                HPDMA1_CH1_Handler
+                0x08000914                DCMIPP_Handler
+                0x08000914                GPDMA1_CH5_Handler
+                0x0800091c                Reset_Handler
+ *(.rodata)
+ .rodata        0x080009a4        0x9 main.o
+                0x080009a4                const_v_1
+                0x080009a8                const_v_2
+                0x080009ac                const_v_3
+                0x080009b0                        . = ALIGN (0x4)
+ *fill*         0x080009ad        0x3 
+                0x080009b0                        _etext = .
+
+.glue_7         0x080009b0        0x0
+ .glue_7        0x080009b0        0x0 linker stubs
+
+.glue_7t        0x080009b0        0x0
+ .glue_7t       0x080009b0        0x0 linker stubs
+
+.vfp11_veneer   0x080009b0        0x0
+ .vfp11_veneer  0x080009b0        0x0 linker stubs
+
+.v4_bx          0x080009b0        0x0
+ .v4_bx         0x080009b0        0x0 linker stubs
+
+.iplt           0x080009b0        0x0
+ .iplt          0x080009b0        0x0 main.o
+
+.rel.dyn        0x080009b0        0x0
+ .rel.iplt      0x080009b0        0x0 main.o
+
+.data           0x24000000        0x4 load address 0x080009b0
+                0x24000000                        _sdata = .
+ *(.data)
+ .data          0x24000000        0x4 main.o
+                0x24000000                current_task
+ .data          0x24000004        0x0 led.o
+ .data          0x24000004        0x0 STM32H7S3L8_startup.o
+                0x24000004                        . = ALIGN (0x4)
+                0x24000004                        _edata = .
+
+.igot.plt       0x24000004        0x0 load address 0x080009b4
+ .igot.plt      0x24000004        0x0 main.o
+
+.bss            0x24000004       0x64 load address 0x080009b4
+                0x24000004                        _sbss = .
+ *(.bss)
+ .bss           0x24000004       0x64 main.o
+                0x24000004                user_tasks
+                0x24000054                g_tick_count
+                0x24000058                ctr1
+                0x2400005c                ctr2
+                0x24000060                ctr3
+                0x24000064                ctr4
+ .bss           0x24000068        0x0 led.o
+ .bss           0x24000068        0x0 STM32H7S3L8_startup.o
+                0x24000068                        . = ALIGN (0x4)
+                0x24000068                        _ebss = .
+
+.ARM.attributes
+                0x00000000       0x2e
+ *(.ARM.attributes)
+ .ARM.attributes
+                0x00000000       0x2e main.o
+ .ARM.attributes
+                0x0000002e       0x2e led.o
+ .ARM.attributes
+                0x0000005c       0x2e STM32H7S3L8_startup.o
+OUTPUT(final.elf elf32-littlearm)
+LOAD linker stubs
+
+.comment        0x00000000       0x45
+ .comment       0x00000000       0x45 main.o
+                                 0x46 (size before relaxing)
+ .comment       0x00000045       0x46 led.o
+ .comment       0x00000045       0x46 STM32H7S3L8_startup.o
